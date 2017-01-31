@@ -123,7 +123,7 @@ U0=np.array([0,0])
 #pdf=uniform_pdf(LQ.xlist)
 trajtotal=np.array([])
 for j in range (1,10,1):
-    traj=ergoptimize(LQ, pdf, xinit,control_init=U0, maxsteps=5)
+    traj=ergoptimize(LQ, pdf, xinit,control_init=U0, maxsteps=20)
     if j>1:
         trajtotal=np.concatenate((trajtotal,traj),axis=0)
     else:

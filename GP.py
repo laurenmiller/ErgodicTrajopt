@@ -42,7 +42,7 @@ class GaussianProcessModel(object):
     def update_GP(self,meas_locations):
         # define grid to evaluate stuff on
         #res = 100
-        sensornoise=.1
+        sensornoise=.000001
         noise= sensornoise*np.random.randn(meas_locations.shape[0])
         measurements = self.simulatedsurface(meas_locations) + noise
         print meas_locations
@@ -51,7 +51,7 @@ class GaussianProcessModel(object):
         # Instanciate and fit Gaussian Process Model
         gp = GaussianProcess(corr='squared_exponential',
             #theta0=10e-1,
-            thetaL=1e-10, thetaU=1e1,
+            #thetaL=10e-1, ##thetaU=1e-1,
             nugget=(sensornoise/self.new_measurements) ** 2
         )
         # Observations
