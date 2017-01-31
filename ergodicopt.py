@@ -114,20 +114,26 @@ LQ=ErgodicOpt(xdim, udim, Nfourier=10, res=100,barrcost=50,R=.1,ergcost=10)
 
 #bimodal_gaussian_pdf(LQ.xlist)
 
-GP=GP.GaussianProcessModel(res=LQ.res)
-GP.update_GP(X)
+
 pdf=bimodal_gaussian_pdf(LQ.xlist)#GP.uncertainty
+#pdf=uniform_pdf(LQ.xlist)
 
 xinit=np.array([0.501,.1])
 U0=np.array([0,0])
+traj=ergoptimize(LQ, pdf, xinit,control_init=U0, maxsteps=20)
+# test code for GP search
+#GP=GP.GaussianProcessModel(res=LQ.res)
+#GP.update_GP(X)
+#xinit=np.array([0.501,.1])
+#U0=np.array([0,0])
 #pdf=uniform_pdf(LQ.xlist)
-trajtotal=np.array([])
-for j in range (1,10,1):
-    traj=ergoptimize(LQ, pdf, xinit,control_init=U0, maxsteps=20)
-    if j>1:
-        trajtotal=np.concatenate((trajtotal,traj),axis=0)
-    else:
-        trajtotal=traj    
-    GP.update_GP(trajtotal)
-    pdf=GP.uncertainty
-    xinit=trajtotal[-1]
+#trajtotal=np.array([])
+#for j in range (1,10,1):
+#    traj=ergoptimize(LQ, pdf, xinit,control_init=U0, maxsteps=20)
+#    if j>1:
+#        trajtotal=np.concatenate((trajtotal,traj),axis=0)
+#    else:
+#        trajtotal=traj    
+#    #GP.update_GP(trajtotal)
+#    #pdf=GP.uncertainty
+#    xinit=trajtotal[-1]
